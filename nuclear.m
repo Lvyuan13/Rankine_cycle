@@ -1,0 +1,17 @@
+clc
+P1=6530
+Q=0.9956
+[T1,h1]=refpropm('TH','P',P1,'Q',Q,'water')
+P2=7080
+T2=221.3+273.15
+H2=refpropm('H','T',T2,'P',P2,'water')
+m4=17550
+m3=m4
+P3=15500
+P4=15500
+T3=330+273.15
+T4=290+273.15
+h3=refpropm('H','T',T3,'P',P3,'water')
+h4=refpropm('H','T',T4,'P',P4,'water')
+m1=m3*(h3-h4)/(h1-h3)
+m2=m1
