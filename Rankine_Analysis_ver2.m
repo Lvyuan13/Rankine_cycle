@@ -31,7 +31,8 @@ P1=17e3;%after boiler
 Q3=0;
 [h3,T3,s3]=refpropm('HTS','P',P3,'Q',Q3,'water');
 
-% state 2 real system
+% state 2 
+% for real system
 P2=P3;
 T2=T3;%excess properties
 % subscript s mean ideal cycle!!!
@@ -40,10 +41,14 @@ h2s=refpropm('H','T',T2,'S',s2s,'water');
 h2=h1-EtaT*(h1-h2s);%mixture of vpor and water
 [Q2,s2]=refpropm('QS','T',T2,'H',h2,'water');
 
-%state 4
+% state 4
 P4=P1;
 s4s=s3;%for ideal process
-[T4,h4]=refpropm('TH','P',P4,'S',s4s,'water');
+[Ts4,h4s]=refpropm('TH','P',P4,'S',s4s,'water');
+h4=h3+(h4s-h3)/EtaP;
+T4=refpropm('T','P',P4,'H',h4,'water');
+
+
 wt=h1-h2;
 wp=h4-h3;
 q_boiler=h1-h4;
@@ -90,7 +95,6 @@ subplot(1,2,2)
 bar(Wnet)
 set(gca,'XTickLabel',Tcond)
 
-clc
 clear
 %Rankine Cycle2
 %{
@@ -113,33 +117,49 @@ KT=273.15;
 % Pstep=0.5;
 % Pend=Pstart+N*Pstep;
 % Theat=[340 435 535 550]+KT;
+EtaP=0.88; %efficient of pump
+EtaT=0.92; %efficient of turbine
 Theat=[440:10:650]+KT;
 i=0;
 for T1=Theat
-KT=273.15;
-% T1=550+KT;
+i=i+1;
+%state 1
 P1=17e3;%after boiler
 [h1,s1]=refpropm('HS','T',T1,'P',P1,'water');
-P3=3.5;%p3 is constant
+
+%state 3 saturated water
+P3=3.5;
 Q3=0;
 [h3,T3,s3]=refpropm('HTS','P',P3,'Q',Q3,'water');
-T2=T3;
-s2=s1;
-[Q2,h2]=refpropm('QH','T',T2,'S',s2,'water');
+
+% state 2 
+% for real system
+P2=P3;
+T2=T3;%excess properties
+% subscript s mean ideal cycle!!!
+s2s=s1; %ideal system
+h2s=refpropm('H','T',T2,'S',s2s,'water');
+h2=h1-EtaT*(h1-h2s);%mixture of vpor and water
+[Q2,s2]=refpropm('QS','T',T2,'H',h2,'water');
+
+% state 4
 P4=P1;
-s4s=s3;
-[T4,h4]=refpropm('TH','P',P4,'S',s4s,'water');
+s4s=s3;%for ideal process
+[Ts4,h4s]=refpropm('TH','P',P4,'S',s4s,'water');
+h4=h3+(h4s-h3)/EtaP;
+T4=refpropm('T','P',P4,'H',h4,'water');
+
 wt=h1-h2;
 wp=h4-h3;
 q_boiler=h1-h4;
 eta=(wt-wp)/q_boiler;
-% i=(P3-Pstart)/Pstep+1
-i=i+1;
 Eff(i)=eta;
 Tcond(i)=T2-KT;
 Wt(i)=wt;
-Wnet(i)=wt-wp;
+Wnet(i)=wt-wp;    
+
 disp(['for heating temperature is ',num2str(T1-KT),'   efficiency of rankine cycle is  ',num2str(eta)])
+
 % T1
 % h1
 % T2
