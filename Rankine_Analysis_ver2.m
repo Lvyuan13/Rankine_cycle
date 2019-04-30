@@ -7,14 +7,14 @@
 % point4:input of boiler
 % change the calculation logic
 % }
-N=2;
+% N=2;
 Tcond=[];%centigrate degree
 Eff=[];
 Wt=[];
 Wnet=[];
-Pstart=1.3;%condense pressure
-Pstep=0.9;
-Pend=Pstart+N*Pstep;
+% Pstart=1.3;%condense pressure
+% Pstep=0.9;
+% Pend=Pstart+N*Pstep;
 i=0;
 EtaP=0.88; %efficient of pump
 EtaT=0.92; %efficient of turbine
