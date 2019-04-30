@@ -44,6 +44,6 @@ T4=refpropm('T','P',P4,'H',h4,'water');
 wt=h1-h2;
 wp=h4-h3;
 q_boiler=h1-h4;
-eta=(wt-wp)/q_boiler
+eta=(wt-wp)/q_boiler;
 
 end
