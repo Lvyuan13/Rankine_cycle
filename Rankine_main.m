@@ -3,10 +3,10 @@ x=[5+273.15:1:26+273.15];
 y=[720:1:930];
 [X,Y]=meshgrid(x,y);
 NX=size(X);
-NX=NX(1)
+NX=NX(1);
 NY=size(Y);
-NY=NY(2)
-Z=zeros(NX,NY)
+NY=NY(2);
+Z=zeros(NX,NY);
 % contour(X,Y,Z)
 for i=(1:1:NX)
     for j=[1:1:NY]
